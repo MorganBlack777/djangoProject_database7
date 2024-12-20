@@ -1,0 +1,5 @@
+Django
+pillow
+django-bootstrap5
+mysqlclient
+django-filter

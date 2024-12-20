@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}{{ action }} поставщика{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ action }} поставщика</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_type="submit" content=action button_class="btn-success" %}
+        <a href="{% url 'store_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

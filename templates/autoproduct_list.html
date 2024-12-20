@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Список автопродуктов{% endblock %}
+
+{% block content %}
+    <div style="text-align: center;padding-top:45px">
+        <h2>Список автопродуктов</h2>
+    </div>
+
+    <!-- Форма для выбора количества записей -->
+    <div class="card col-8 row-12" style="margin: auto; padding: 20px;">
+        <form method="get">
+            {% bootstrap_form filter.form %}
+            
+            <label for="records_per_page">Количество записей на странице:</label>
+            <select id="records_per_page" name="records_per_page" onchange="this.form.submit()">
+                <option value="5" {% if records_per_page == 5 %}selected{% endif %}>5</option>
+                <option value="7" {% if records_per_page == 7 %}selected{% endif %}>7</option>
+                <option value="10" {% if records_per_page == 10 %}selected{% endif %}>10</option>
+                <option value="20" {% if records_per_page == 20 %}selected{% endif %}>20</option>
+            </select>
+            
+            <button type="submit" class="btn btn-primary">Применить</button>
+        </form>
+    </div>
+
+    {% if admin %}
+        <a href="{% url 'autoproduct_create' %}" class="btn btn-danger mb-3">Добавить автопродукт</a>
+    {% endif %}
+
+    <article>
+        {% for product in page_obj %}
+            <div class="card mb-3" style="max-width: 40rem; margin: auto;">
+                <div class="card-body">
+                    {% if product.Autoproduct_photo %}
+                        <img src="{{ product.Autoproduct_photo.url }}" class="card-img-top" alt="{{ product.name }}" height="350px" width="256px">
+                    {% else %}
+                        <img src="/autoproduct_photos/img_not_found.png" class="card-img-top" alt="{{ product.name }}" height="350px" width="256px">
+                    {% endif %}
+                    <h5 class="card-title">{{ product.Autoproduct_type }}</h5>
+                    <p class="card-text">Цена: {{ product.Price }}</p>
+                    <p class="card-text">Материал: {{ product.Material }}</p>
+                    <p class="card-text">Цвет: {{ product.Color }}</p>
+
+                    {% if admin %}
+                        <a href="{% url 'autoproduct_edit' product.pk %}" class="btn btn-info">Изменить</a>
+                        <a href="{% url 'autoproduct_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </article>
+
+{% endblock %}

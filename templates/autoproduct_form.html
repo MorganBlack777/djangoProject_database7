@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}{{ action }} автопродукт{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ action }} автопродукт</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_type="submit" content=action button_class="btn-success" %}
+        <a href="{% url 'autoproduct_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

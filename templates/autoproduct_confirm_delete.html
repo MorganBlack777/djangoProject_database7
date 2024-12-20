@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Удалить автопродукт{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Удалить автопродукт "{{ object.Autoproduct_type }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'autoproduct_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
